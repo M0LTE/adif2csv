@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "adif2csv": {
+      "commandName": "Project",
+      "commandLineArgs": "c:\\users\\tomandels\\downloads\\m0lte.adi -"
+    }
+  }
+}
