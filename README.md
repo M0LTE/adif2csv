@@ -11,6 +11,7 @@ Tested with Cloudlog and N1MM+ export files.
 
 ```
 git clone https://github.com/M0LTE/adif2csv.git
+cd adif2csv
 dotnet build 
 ```
 
