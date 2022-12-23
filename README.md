@@ -26,3 +26,4 @@ outfile can be a hyphen, in which case output will be to stdout.
 
 outfile can also exist, in which case it will be appended to.
 
+Slight differences for Linux/Mac, of course.
