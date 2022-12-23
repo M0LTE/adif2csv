@@ -4,7 +4,8 @@ A .NET 6 command line utility to take ADIF files and convert them to the CSV for
 Tested with Cloudlog and N1MM+ export files.
 
 ## Prerequisites
-.NET 6 SDK for your platform from https://dotnet.microsoft.com/en-us/download
+- .NET 6 SDK for your platform from https://dotnet.microsoft.com/en-us/download
+- git, e.g. https://gitforwindows.org/
 
 ## Building
 
