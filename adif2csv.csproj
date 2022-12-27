@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AdifLib" Version="1.2.0" />
+    <PackageReference Include="AdifLib" Version="1.3.0" />
     <PackageReference Include="MaidenheadLib" Version="1.0.0" />
   </ItemGroup>
 
