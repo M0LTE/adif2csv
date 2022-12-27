@@ -47,10 +47,12 @@ List<string> lines = new();
 
 foreach (var record in adifFile.Records)
 {
+    var mycall = record.StationCallsign ?? record.Operator;
+
     List<string?> rowItems = new() {
         DateTime.UtcNow.ToString(dateformat),
         record.QsoStart.ToString(dateformat),
-        record.StationCallsign?.ToUpper()?.Trim(),
+        mycall?.ToUpper()?.Trim(),
         record.Call?.ToUpper()?.Trim(),
         record.Band?.ToUpper()?.Trim(),
         record.Mode?.ToUpper()?.Trim(),
@@ -61,9 +63,15 @@ foreach (var record in adifFile.Records)
 
     rowItems.AddRange(BuildGeoColumns(record));
 
-    var line = string.Join(",", rowItems.Select(i => $"\"{i}\""));
+    var line = string.Join(",", rowItems.Select(i => IsNumeric(i) ? i : $"\"{i}\""));
 
     lines.Add(line);
+}
+
+static bool IsNumeric(string? i)
+{
+    if (i == null) return true;
+    return i.All(c => char.IsNumber(c) || c == '.' || c == '-');
 }
 
 const string Header = "Timestamp, QSO Datetime (UTC), Your Callsign, Their Callsign, Band, Mode, Locator Sent - Optional, Locator Received - Optional, Any other details - Optional, Their latitude, Their longitude, Your latitude, Your longitude, Distance (km)";
@@ -114,8 +122,8 @@ static List<string> BuildGeoColumns(AdifContactRecord record)
             var (lat, lon) = MaidenheadLocator.LocatorToLatLng(record.GridSquare);
             if (lat != default && lon != default)
             {
-                rowItems.Add(lat.ToString());
-                rowItems.Add(lon.ToString());
+                rowItems.Add(lat.ToString("0.000000"));
+                rowItems.Add(lon.ToString("0.000000"));
             }
         }
         catch (Exception)
@@ -137,8 +145,8 @@ static List<string> BuildGeoColumns(AdifContactRecord record)
             var (lat, lon) = MaidenheadLocator.LocatorToLatLng(record.MyGridSquare);
             if (lat != default && lon != default)
             {
-                rowItems.Add(lat.ToString());
-                rowItems.Add(lon.ToString());
+                rowItems.Add(lat.ToString("0.000000"));
+                rowItems.Add(lon.ToString("0.000000"));
             }
         }
         catch (Exception)
@@ -157,7 +165,7 @@ static List<string> BuildGeoColumns(AdifContactRecord record)
     {
         try
         {
-            rowItems.Add(MaidenheadLocator.Distance(record.GridSquare, record.MyGridSquare).ToString());
+            rowItems.Add(MaidenheadLocator.Distance(record.GridSquare, record.MyGridSquare).ToString("0"));
         }
         catch (Exception)
         {
