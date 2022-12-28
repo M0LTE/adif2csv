@@ -35,9 +35,9 @@ catch (Exception ex)
     return -1;
 }
 
-if (!AdifFile.TryParse(data, out var adifFile))
+if (!AdifFile.TryParse(data, out var adifFile, out var reason))
 {
-    Console.WriteLine($"Could not parse {infile}");
+    Console.WriteLine($"Could not parse {infile}: {reason}");
     return -1;
 }
 
